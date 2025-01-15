@@ -15,60 +15,8 @@ public class Employee {
 	private static double stipendioBase;
 	private static int id_team;
 
-	public Employee(int id, String nome, String cognome, double stipendioBase, int id_team) {
-		this.id = id;
-		this.nome = nome;
-		this.cognome = cognome;
-		this.stipendioBase = stipendioBase;
-		this.id_team= id_team;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCognome() {
-		return cognome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-
-	public double getStipendioBase() {
-		return stipendioBase;
-	}
-
-	public void setStipendioBase(double stipendioBase) {
-		this.stipendioBase = stipendioBase;
-	}
-
-	public int getId_team() {
-		return id_team;
-	}
-
-	public void setId_team(int id_team) {
-		this.id_team = id_team;
-	}
-
-	@Override
-	public String toString() {
-		return "id= " + id + ", nome= " + nome + ", cognome= " + cognome + ", stipendioBase= " + stipendioBase;
-	}
-	
-	//metodo per stampare le operazioni
+		
+	//metodo per stampare le operazioni CRUD
 	public static void menuDipendenti(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -89,13 +37,16 @@ public class Employee {
 			switch (sceltaCiclo) {
 			case 1:
 				scanner.nextLine();
-				insertDipendenti(scanner);
+				int insert = insertDipendenti(scanner);
+				if (insert>0) 
+					System.out.println("Inserito dipendenti con ID: "+insert);
 				break;
 			case 2:
 				readAllDipendenti();
 				deleteDipendenti(scanner);
 				break;
 			case 3:
+				scanner.nextLine();
 				readAllDipendenti();
 				updateDipendente(scanner);
 				break;
@@ -112,8 +63,13 @@ public class Employee {
 	}
 
 
-
-	// metodo per stampare la lista dei dipendenti
+	/*
+	 * metodo per leggere la tabella dipendenti
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */
 	public static void readAllDipendenti() {
 		String sql = "SELECT * FROM dipendenti";
 
@@ -130,7 +86,7 @@ public class Employee {
 				 stipendioBase = rs.getDouble("stipendio_base");
 				 id_team = rs.getInt("id_team");
 
-				System.out.printf("ID: %d | Nome: %s | Cognome: %s | Stipendio: %.2f | ID team: %d", id, nome, cognome,
+				System.out.printf("ID: %d | Nome: %s | Cognome: %s | Stipendio: %.2f | ID team: %d\n", id, nome, cognome,
 						stipendioBase, id_team);
 			}
 
@@ -143,12 +99,13 @@ public class Employee {
 	/*
 	 * metodo per aggiungere nuovi dipendenti
 	 * 
-	 * @param scanner -> per raccogliere i vari input dall'utente (nome, cognome, stipendioBase, id_team)
+	 * @param scanner -> per raccogliere i vari input dall'utente 
 	 * 
 	 * @return int contenente l'id del nuovo record; -1 in caso di errore
 	 */
 	public static int insertDipendenti(Scanner scanner) {
-		String sql = "INSERT INTO dipendenti(nome_dipendente, cognome_dipendente, stipendio_base) VALUES(?, ?, ?)";
+		String sql = "INSERT INTO dipendenti(nome_dipendente, cognome_dipendente, stipendio_base, id_team)\r\n"
+				+ "VALUES (?, ?, ?, ?)";
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -163,10 +120,7 @@ public class Employee {
 			System.out.println("Inserire lo stipendio (base):");
 			stipendioBase=scanner.nextInt();
 			pstmt.setDouble(3, stipendioBase);
-			
-			/*System.out.println("Inserire l'ID del team cui il dipendente farà parte:");
-			id_team=scanner.nextInt();
-			pstmt.setInt(4, id_team);*/
+		
 
 			int affectedRows = pstmt.executeUpdate();
 			if (affectedRows == 0) {
@@ -223,7 +177,7 @@ public class Employee {
 		List<String> colonneValide = Arrays.asList("nome_dipendente", "cognome_dipendente", "stipendio_base", "id_team");
 
 		// raccogliamo l'input del campo da modificare
-		System.out.println("Quale campo vuoi aggiornare? 1) nome_dipendente 2) cognome_dipendente 3) stipendio_base 4) id_team");
+		System.out.println("Quale campo vuoi aggiornare? 1) nome_dipendente 2) cognome_dipendente 3) stipendio_base 4) id_team?");
 		String input = scanner.nextLine();
 
 		// if-else per controllare se la stringa contenuta è nell'ArrayList

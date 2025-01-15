@@ -7,37 +7,8 @@ public class Team {
 
 	private static Connection conn = Connessione.getConnection("azienda");
 
-	private int idTeam;
-	private String nome;
-
-	public Team(int idTeam, String nome) {
-		this.idTeam = idTeam;
-		this.nome = nome;
-	}
-
-	public int getIdTeam() {
-		return idTeam;
-	}
-
-	public void setIdTeam(int idTeam) {
-		this.idTeam = idTeam;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	@Override
-	public String toString() {
-		return "id= " + idTeam + ", nome= " + nome;
-	}
 	
-	
-	//metodo per stampare le operazioni
+	//metodo per stampare le operazioni CRUD
 	public static void menuTeam(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -57,7 +28,10 @@ public class Team {
 		}
 			switch (sceltaCiclo) {
 			case 1:
-				insertTeam(scanner);
+				scanner.nextLine();
+				int insert = insertTeam(scanner);
+				if (insert>0) 
+					System.out.println("Inserito Team con ID: "+insert);
 				break;
 			case 2:
 				readAllTeam();
@@ -79,14 +53,21 @@ public class Team {
 		} while (sceltaCiclo != 0);
 	}
 	
-
+	
+	/*
+	 * metodo per aggiungere nuovi team
+	 * 
+	 * @param scanner ->	per raccogliere i vari input dall'utente (bonus, teamGestito, idDipendente)
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */
 	public static int insertTeam(Scanner scanner) {
-		String sql = "INSERT INTO team (nome_team) VALUES (?);";
+		String sql = "INSERT INTO team (nome_team) VALUES (?)";
 		try {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
-			System.out.println("Inserire il nome del team da inserire");
+			System.out.println("Inserire il nome del team: ");
 			String nome = scanner.nextLine();
 			
 			pstmt.setString(1, nome);
@@ -108,6 +89,12 @@ public class Team {
 		return -1;
 	}
 	
+	
+	/*
+	 * metodo per cancellare un record dalla tabella
+	 * 
+	 * @param id -> id del record da eliminare
+	 */
 	public static void deleteTeam(Scanner scanner) {
         String sql = "DELETE FROM team WHERE id_team = ?";
         try (
@@ -129,6 +116,12 @@ public class Team {
         }
     }
 
+	/*
+	 * metodo per leggere la tabella team
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore*/
 	public static void readAllTeam() {
 		String sql = "SELECT * FROM team;";
 		try {
@@ -148,6 +141,11 @@ public class Team {
 		}
 	}
 
+	/*
+	 * metodo dinamico per aggiornare una cella specifica della tabella
+	 * 
+	 * @param scanner	->	scanner per gestire i vari input presenti nel metodo
+	 */
 	public static void updateTeam(Scanner scanner) {
 		String sql = "UPDATE team SET nome_team = ? WHERE id_team = ?";
 

@@ -6,7 +6,7 @@ public class Connessione {
 
 		private static final String url = "jdbc:mysql://localhost/";
 		private static final String USER = "root";
-		private static final String PW = "Trust1981";
+		private static final String PW = "Trust1981.";
 		private static Connection conn = null;
 
 		/*

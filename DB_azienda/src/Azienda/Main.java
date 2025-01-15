@@ -15,7 +15,7 @@ public class Main {
 		}
 	
 	public static void menuGenerale (Scanner scanner) {
-		String[] Tabelle = { "Employee", "Developer", "Manager", "Linguaggi", "Linguaggi conosciuti", "Team", "Progetti assegnati"};
+		String[] Tabelle = { "Developer", "Employee", "Linguaggi", "Linguaggi conosciuti", "Manager", "Progetti assegnati", "Progetti", "Team", };
 		
 		int inizioCiclo = 1;
 		do {
@@ -34,31 +34,34 @@ public class Main {
 		}
 			switch (inizioCiclo) {
 			case 1:
-				Employee.menuDipendenti(scanner);
-				break;
-			case 2: 
 				Developer.menuDeveloper(scanner);
 				break;
-			case 3:
-				Manager.menuManager(scanner);
+			case 2: 				
+				Employee.menuDipendenti(scanner);
 				break;
-			case 4:
+			case 3:
 				Linguaggi.menuLinguaggi(scanner);
 				break;
-			case 5:
+			case 4:
 				LinguaggiConosciuti.menuLinguaggiConosciuti(scanner);
 				break;
-			case 6:
-				Team.menuTeam(scanner);
+			case 5:
+				Manager.menuManager(scanner);
+				break;		
+			case 6:				
+				Progetti.menuProgetti(scanner);
 				break;
 			case 7:
 				ProgettiDeveloper.menuProgettiDeveloper(scanner);
 				break;
+			case 8:
+				Team.menuTeam(scanner);
+				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
-				System.out.print("Operazione non esistente.");
+				System.out.println("Operazione non esistente.");
 			}
 		} while (inizioCiclo != 0);
 

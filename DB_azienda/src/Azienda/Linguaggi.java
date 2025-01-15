@@ -11,7 +11,7 @@ public class Linguaggi {
 	private static int idLinguaggio;
 	private static String nomeLinguaggio;
 
-	//metodo per stampare le operazioni
+	//metodo per stampare le operazioni CRUD
 	public static void menuLinguaggi(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -31,7 +31,11 @@ public class Linguaggi {
 		}
 			switch (sceltaCiclo) {
 			case 1:
-				insertLinguaggi(scanner);
+				scanner.nextLine();
+				scanner.nextLine();
+				int insert = insertLinguaggi(scanner);
+				if (insert>0) 
+					System.out.println("Inserito linguaggio con ID: "+insert);
 				break;
 			case 2:
 				readAllLinguaggi();
@@ -54,7 +58,13 @@ public class Linguaggi {
 	}
 	
 	
-	// metodo per stampare la lista dei linguaggi
+	/*
+	 * metodo per leggere la tabella linguaggi
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */
 	public static void readAllLinguaggi() {
 		String sql = "SELECT * FROM linguaggi";
 
@@ -144,7 +154,7 @@ public class Linguaggi {
 	 */
 	public static void updateLinguaggi(Scanner scanner) {
 
-		String sql = "UPDATE linguaggi SET nome_linguaggio= ? WHERE id_dipendente= ?";
+		String sql = "UPDATE linguaggi SET nome_linguaggio= ? WHERE id_linguaggio= ?";
 
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {

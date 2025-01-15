@@ -14,13 +14,18 @@ public class ProgettiDeveloper {
 	private static int id_progetti;
 	private static int id_developer;
 
-	// metodo per stampare i dati dei developer e i progetti su cui stanno lavorando
+	/*
+	 * metodo per leggere la tabella progetti assegnati
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */	
 	public static void readAllProgettiDeveloper() {
 		String sql = "SELECT dipendenti.nome_dipendente, dipendenti.cognome_dipendente, progetto.nome_progetto\r\n"
-				+ "FROM dipendenti\r\n"
-				+ "INNER JOIN developer ON dipendenti.id_dipendente = developer.id_dipendente\r\n"
+				+ "FROM dipendentiINNER JOIN developer ON dipendenti.id_dipendente = developer.id_dipendente\r\n"
 				+ "INNER JOIN progetti_developer ON developer.id_developer = progetti_developer.id_developer\r\n"
-				+ "INNER JOIN progetto ON progetti_developer.id_developer=progetto.id_progetto;";
+				+ "INNER JOIN progetto ON progetti_developer.id_developer=progetto.id_progetto";
 
 		System.out.println("Lista DEVELOPER+LINGUAGGI CONOSCIUTI:");
 
@@ -51,7 +56,8 @@ public class ProgettiDeveloper {
 	 * @return int contenente l'id del nuovo record; -1 in caso di errore
 	 */
 	public static int insertProgettiDeveloper(Scanner scanner) {
-		String sql = "INSERT INTO linguaggi_conosciuti VALUES(?, ?)";
+		String sql = "INSERT INTO progetti_developer(id_progetti, id_developer)\r\n"
+				+ "VALUES (?, ?)";
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -86,7 +92,8 @@ public class ProgettiDeveloper {
 	 * @param scanner -> per ricevere tramite input l'id dell'utente da eliminare
 	 */
 	public static void deleteProgettiDeveloper(Scanner scanner) {
-		String sql = "DELETE FROM progetti_developer WHERE id_progetti_developer=?";
+		String sql = "DELETE FROM progetti_developer\r\n"
+				+ "WHERE id_progetti_developer=?";
 
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -162,7 +169,7 @@ public class ProgettiDeveloper {
 		}
 	}
 	
-	//metodo per stampare le operazioni
+	//metodo per stampare le operazioni CRUD
 	public static void menuProgettiDeveloper(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -182,7 +189,11 @@ public class ProgettiDeveloper {
 		}
 			switch (sceltaCiclo) {
 			case 1:
-				insertProgettiDeveloper(scanner);
+				scanner.nextLine();
+				scanner.nextLine();
+				int insert = insertProgettiDeveloper(scanner);
+				if (insert>0) 
+					System.out.println("Inserito record \"progetti_developer\" con ID: "+insert);			
 				break;
 			case 2:
 				readAllProgettiDeveloper();

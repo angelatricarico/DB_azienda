@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Manager extends Employee {
+public class Manager  {
 
 	private static Connection conn = Connessione.getConnection("azienda");
 
@@ -14,36 +14,8 @@ public class Manager extends Employee {
 	private static int teamGestito;
 	private static int idDipendente;
 
-	public Manager(int id, String nome, String cognome, double stipendioBase, int id_team, int idManager, double bonus, int teamGestito, int id_dipendente) {
-		super(id, nome, cognome, stipendioBase, id_team);
-		this.idManager = idManager;
-		this.bonus = bonus;
-		this.teamGestito = teamGestito;
-		this.idDipendente = idDipendente;
-	}
-
-	public double getBonus() {
-		return bonus;
-	}
-
-	public int getTeamGestito() {
-		return teamGestito;
-	}
-
-	public void setBonus(double bonus) {
-		this.bonus = bonus;
-	}
-
-	public void setTeamGestito(int teamGestito) {
-		this.teamGestito = teamGestito;
-	}
-
-	/*
-	 * @Override public String toString () { super.toString(); return ", Bonus= " +
-	 * bonus + ", Team gestito: " + teamGestito; }
-	 */
 	
-	//metodo per stampare le operazioni
+	//metodo per stampare le operazioni CRUD
 	public static void menuManager(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -63,7 +35,10 @@ public class Manager extends Employee {
 		}
 			switch (sceltaCiclo) {
 			case 1:
-				insertManager(scanner);
+				scanner.nextLine();
+				int insert = insertManager(scanner);
+				if (insert>0) 
+					System.out.println("Inserito manager con ID: "+insert);			
 				break;
 			case 2:
 				readAllManager();
@@ -85,9 +60,16 @@ public class Manager extends Employee {
 		} while (sceltaCiclo != 0);
 	}
 
-	// metodo per stampare la lista dei manager
+	
+	/*
+	 * metodo per leggere la tabella manager
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore*/
 	public static void readAllManager() {
-		String sql = "SELECT * FROM manager";
+		String sql = "SELECT * FROM dipendenti\r\n"
+				+ "RIGHT JOIN manager ON manager.id_dipendente = dipendenti.id_dipendente";
 
 		System.out.println("Lista manager:");
 
@@ -96,13 +78,15 @@ public class Manager extends Employee {
 				ResultSet rs = s.executeQuery(sql)) {
 
 			while (rs.next()) {
+				String nome = rs.getString("nome_dipendente");
+				String cognome = rs.getString("cognome_dipendente");
+				double stipendioBase = rs.getDouble("stipendio_base");
 				idManager = rs.getInt("id_manager");
 				bonus = rs.getDouble("bonus");
 				teamGestito = rs.getInt("teamGestito");
-				idDipendente = rs.getInt("id_dipendente");
 
-				System.out.printf("ID Manager: %d | Bonus: %.2f | ID Team Gestito: %d | ID Dipendente: %d", idManager, bonus,
-						teamGestito, idDipendente);
+				System.out.printf("ID Manager: %d | Nome: %s | Cognome: %s | Stipendio base: %.2f | Bonus: %.2f | ID Team Gestito: %d\n", 
+						idManager, nome, cognome, stipendioBase, bonus, teamGestito);
 			}
 
 		} catch (SQLException e) {
@@ -112,14 +96,15 @@ public class Manager extends Employee {
 	}
 	
 	/*
-	 * metodo per aggiungere nuovi dipendenti
+	 * metodo per aggiungere nuovi manager
 	 * 
 	 * @param scanner ->	per raccogliere i vari input dall'utente (bonus, teamGestito, idDipendente)
 	 * 
 	 * @return int contenente l'id del nuovo record; -1 in caso di errore
 	 */
 	public static int insertManager(Scanner scanner) {
-		String sql = "INSERT INTO manager VALUES(?, ?, ?)";
+		String sql = "INSERT INTO manager(bonus, teamGestito, id_dipendente)\r\n"
+				+ "VALUES (?, ?, ?)";
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			
@@ -234,33 +219,6 @@ public class Manager extends Employee {
 		} else {
 			System.out.println("Nome colonna non presente.");
 		}
-	}
-	
-	
-	public static void readNomeManager() {
-		String sql = "SELECT nome_dipendente, stipendio_base, bonus FROM manager INNER JOIN dipendenti ON manager.id_dipendente=dipendenti.id_dipendente";
-
-		System.out.println("Lista manager:");
-
-		try (
-				Statement s = conn.createStatement();
-				ResultSet rs = s.executeQuery(sql)) {
-
-			while (rs.next()) {
-
-				String nome = rs.getString("nome_dipendente");
-				double stipendio = rs.getDouble("stipendio_base");
-				bonus = rs.getDouble("bonus");
-				
-
-				System.out.printf("Nome: %s | Stipendio: %.2f | Bonus: %.2f", nome, stipendio,
-						bonus);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 }

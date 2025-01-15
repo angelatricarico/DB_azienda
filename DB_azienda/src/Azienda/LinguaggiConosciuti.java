@@ -15,7 +15,7 @@ public class LinguaggiConosciuti {
 	private static int id_developer;
 	
 	
-	//metodo per stampare le operazioni
+	//metodo per stampare le  CRUD
 	public static void menuLinguaggiConosciuti(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -35,7 +35,10 @@ public class LinguaggiConosciuti {
 		}
 			switch (sceltaCiclo) {
 			case 1:
-				insertLinguaggiConosciuti(scanner);
+				scanner.nextLine();
+				int insert = insertLinguaggiConosciuti(scanner);
+				if (insert>0) 
+					System.out.println("Inserito record \"linguaggi_conosciuti\" con ID: "+insert);
 				break;
 			case 2:
 				readAllLinguaggiConosciuti();
@@ -57,13 +60,18 @@ public class LinguaggiConosciuti {
 		} while (sceltaCiclo != 0);
 	}
 
-	// metodo per stampare i dati dei developer e i linguaggi conosciuti
-		public static void readAllLinguaggiConosciuti() {
-			String sql = "SELECT nome_dipendente, cognome_dipendente, nome_linguaggio\r\n"
+	/*
+	 * metodo per leggere la tabella dipendenti
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */		public static void readAllLinguaggiConosciuti() {
+			String sql = "SELECT nome_dipendente, cognome_dipendente, nome_linguaggio \r\n"
 					+ "FROM dipendenti\r\n"
-					+ "INNER JOIN developer ON dipendenti.id_dipendente = developer.id_dipendente\r\n"
-					+ "INNER JOIN linguaggi_conosciuti ON developer.id_developer = linguaggi_conosciuti.id_developer\r\n"
-					+ "INNER JOIN linguaggi ON linguaggi.id_linguaggio=linguaggi_conosciuti.id_linguaggi";
+					+ "INNER JOIN developer ON dipendenti.id_dipendente=developer.id_dipendente\r\n"
+					+ "INNER JOIN linguaggi_conosciuti ON developer.id_developer=linguaggi_conosciuti.id_developer\r\n"
+					+ "INNER JOIN linuaggi ON linguaggi_conosciuti.id_linguaggio=linguaggi.id_linguaggio";
 
 			System.out.println("Lista DEVELOPER+LINGUAGGI CONOSCIUTI:");
 
@@ -93,7 +101,8 @@ public class LinguaggiConosciuti {
 		 * @return int contenente l'id del nuovo record; -1 in caso di errore
 		 */
 		public static int insertLinguaggiConosciuti(Scanner scanner) {
-			String sql = "INSERT INTO linguaggi_conosciuti VALUES(?, ?)";
+			String sql = "INSERT INTO linguaggi_conosciuti(id_developer, id_linguaggio)\r\n"
+					+ "VALUES (?, ?)";
 			try (
 					PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 

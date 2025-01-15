@@ -9,36 +9,8 @@ public class Progetti {
 
 	private static Connection conn = Connessione.getConnection("azienda");
 	
-	private int idProgetto;
-	private String nome;
-
-	public Progetti(int idProgetto, String nome) {
-		this.idProgetto = idProgetto;
-		this.nome = nome;
-	}
-
-	public int getIdProgetto() {
-		return idProgetto;
-	}
-
-	public void setIdProgetto(int idProgetto) {
-		this.idProgetto = idProgetto;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	@Override
-	public String toString() {
-		return "id= " + idProgetto + ", nome= " + nome;
-	}
 	
-	//metodo per stampare le operazioni
+	//metodo per stampare le operazioni CRUD
 	public static void menuProgetti(Scanner scanner) {
 		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
 		
@@ -58,8 +30,11 @@ public class Progetti {
 		}
 			switch (sceltaCiclo) {
 			case 1:
-				insertProgetto(scanner);
-				break;
+				scanner.nextLine();
+				scanner.nextLine();
+				int insert = insertProgetto(scanner);
+				if (insert>0) 
+					System.out.println("Inserito progetto con ID: "+insert);
 			case 2:
 				readAllProgetto();
 				deleteProgetto(scanner);
@@ -80,6 +55,13 @@ public class Progetti {
 		} while (sceltaCiclo != 0);
 	}
 	
+	/*
+	 * metodo per aggiungere nuovi progetti
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */
 	public static int insertProgetto(Scanner scanner) {
 		String sql = "INSERT INTO progetti (nome_progetto, id_team) VALUES (?,?);";
 		try {
@@ -113,6 +95,11 @@ public class Progetti {
 		return -1;
 	}
 	
+	/*
+	 * metodo per cancellare un record dalla tabella
+	 * 
+	 * @param scanner -> per ricevere tramite input l'id dell'utente da eliminare
+	 */
 	public static void deleteProgetto(Scanner scanner) {
         String sql = "DELETE FROM progetti WHERE id_progetto = ?";
         try (
@@ -134,6 +121,13 @@ public class Progetti {
         }
     }
 	
+	/*
+	 * metodo per leggere la tabella progetti
+	 * 
+	 * @param scanner -> per raccogliere i vari input dall'utente 
+	 * 
+	 * @return int contenente l'id del nuovo record; -1 in caso di errore
+	 */
 	public static void readAllProgetto() {
 		String sql = "SELECT * FROM progetti;";
 		try {
@@ -154,6 +148,11 @@ public class Progetti {
 		}
 	}
 	
+	/*
+	 * metodo dinamico per aggiornare una cella specifica della tabella
+	 * 
+	 * @param scanner	->	scanner per gestire i vari input presenti nel metodo
+	 */
 	public static void updateProgetto(Scanner scanner) {
 		scanner.nextLine(); 
 		List<String> colonneValide = Arrays.asList("nome_progetto", "id_team");
