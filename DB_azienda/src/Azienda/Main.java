@@ -15,7 +15,7 @@ public class Main {
 		}
 	
 	public static void menuGenerale (Scanner scanner) {
-		String[] Tabelle = { "Developer", "Employee", "Linguaggi", "Linguaggi conosciuti", "Manager", "Progetti assegnati", "Progetti", "Team", };
+		String[] Tabelle = { "Team", "Linguaggi", "Dipendenti", "Developer", "Manager", "Progetti", "Progetti developer", "Linguaggi conosciuti", };
 		
 		int inizioCiclo = 1;
 		do {
@@ -34,17 +34,18 @@ public class Main {
 		}
 			switch (inizioCiclo) {
 			case 1:
-				Developer.menuDeveloper(scanner);
+				Team.menuTeam(scanner);
 				break;
-			case 2: 				
-				Employee.menuDipendenti(scanner);
-				break;
-			case 3:
+			case 2: 		
 				Linguaggi.menuLinguaggi(scanner);
 				break;
-			case 4:
-				LinguaggiConosciuti.menuLinguaggiConosciuti(scanner);
+			case 3:
+				Employee.menuDipendenti(scanner);
 				break;
+			case 4:
+				Developer.menuDeveloper(scanner);
+				break;
+
 			case 5:
 				Manager.menuManager(scanner);
 				break;		
@@ -55,7 +56,7 @@ public class Main {
 				ProgettiDeveloper.menuProgettiDeveloper(scanner);
 				break;
 			case 8:
-				Team.menuTeam(scanner);
+				LinguaggiConosciuti.menuLinguaggiConosciuti(scanner);
 				break;
 			case 0: 			
 				System.out.println("Arrivederci.");
