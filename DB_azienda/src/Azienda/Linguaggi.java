@@ -14,6 +14,49 @@ public class Linguaggi {
 	private static int idLinguaggio;
 	private static String nomeLinguaggio;
 
+	//metodo per stampare le operazioni
+	public static void menuLinguaggi(Scanner scanner) {
+		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
+		
+		int sceltaCiclo = 0;
+		do {
+		System.out.print("Scegli l'operazione da eseguire:\n");
+		for (int i = 0; i < Operazioni.length; i++) {
+			System.out.println((i + 1) + ". " + Operazioni[i]);
+	}
+		System.out.println("0. ESCI");
+		try {
+			sceltaCiclo = scanner.nextInt();
+		} catch (Exception e) {
+			System.out.print("Carattere non valido. Riprovare.");
+	    	   scanner.nextLine();
+	    	   continue;
+		}
+			switch (sceltaCiclo) {
+			case 1:
+				insertLinguaggi(scanner);
+				break;
+			case 2:
+				readAllLinguaggi();
+				deleteLinguaggi(scanner);
+				break;
+			case 3:
+				readAllLinguaggi();
+				updateLinguaggi(scanner);
+				break;
+			case 4:
+				readAllLinguaggi();
+				break;
+			case 0: 			
+				System.out.print("Arrivederci.");
+				break;
+			default:
+				System.out.print("Operazione non esistente.");
+			}
+		} while (sceltaCiclo != 0);
+	}
+	
+	
 	// metodo per stampare la lista dei linguaggi
 	public static void readAllLinguaggi() {
 		String sql = "SELECT * FROM linguaggi";
@@ -36,6 +79,9 @@ public class Linguaggi {
 		}
 
 	}
+	
+
+
 
 	/*
 	 * metodo per aggiungere nuovi linguaggio

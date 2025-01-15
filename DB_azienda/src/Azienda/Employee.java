@@ -8,9 +8,9 @@ import java.util.List;
 public class Employee {
 
 	// dati per login
-	private static final String URL = "jdbc:mysql://localhost/azienda";
+	private static final String URL = "jdbc:mysql://localhost:3306/azienda";
 	private static final String USER = "root";
-	private static final String PASSWORD = "sl._N2aScXw3i";
+	private static final String PASSWORD = "Trust1981.";
 
 	private static int id;
 	private static String nome;
@@ -70,6 +70,51 @@ public class Employee {
 	public String toString() {
 		return "id= " + id + ", nome= " + nome + ", cognome= " + cognome + ", stipendioBase= " + stipendioBase;
 	}
+	
+	//metodo per stampare le operazioni
+	public static void menuDipendenti(Scanner scanner) {
+		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
+		
+		int sceltaCiclo = 0;
+		do {
+		System.out.print("Scegli l'operazione da eseguire:\n");
+		for (int i = 0; i < Operazioni.length; i++) {
+			System.out.println((i + 1) + ". " + Operazioni[i]);
+	}
+		System.out.println("0. ESCI");
+		try {
+			sceltaCiclo = scanner.nextInt();
+		} catch (Exception e) {
+			System.out.print("Carattere non valido. Riprovare.");
+	    	   scanner.nextLine();
+	    	   continue;
+		}
+			switch (sceltaCiclo) {
+			case 1:
+				scanner.nextLine();
+				insertDipendenti(scanner);
+				break;
+			case 2:
+				readAllDipendenti();
+				deleteDipendenti(scanner);
+				break;
+			case 3:
+				readAllDipendenti();
+				updateDipendente(scanner);
+				break;
+			case 4:
+				readAllDipendenti();
+				break;
+			case 0: 			
+				System.out.print("Arrivederci.");
+				break;
+			default:
+				System.out.print("Operazione non esistente.");
+			}
+		} while (sceltaCiclo != 0);
+	}
+
+
 
 	// metodo per stampare la lista dei dipendenti
 	public static void readAllDipendenti() {
@@ -106,7 +151,7 @@ public class Employee {
 	 * @return int contenente l'id del nuovo record; -1 in caso di errore
 	 */
 	public static int insertDipendenti(Scanner scanner) {
-		String sql = "INSERT INTO dipendenti VALUES(?, ?, ?, ?)";
+		String sql = "INSERT INTO dipendenti(nome_dipendente, cognome_dipendente, stipendio_base) VALUES(?, ?, ?)";
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -122,9 +167,9 @@ public class Employee {
 			stipendioBase=scanner.nextInt();
 			pstmt.setDouble(3, stipendioBase);
 			
-			System.out.println("Inserire l'ID del team cui il dipendente farà parte:");
+			/*System.out.println("Inserire l'ID del team cui il dipendente farà parte:");
 			id_team=scanner.nextInt();
-			pstmt.setInt(4, id_team);
+			pstmt.setInt(4, id_team);*/
 
 			int affectedRows = pstmt.executeUpdate();
 			if (affectedRows == 0) {

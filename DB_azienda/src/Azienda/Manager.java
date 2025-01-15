@@ -45,6 +45,48 @@ public class Manager extends Employee {
 	 * @Override public String toString () { super.toString(); return ", Bonus= " +
 	 * bonus + ", Team gestito: " + teamGestito; }
 	 */
+	
+	//metodo per stampare le operazioni
+	public static void menuManager(Scanner scanner) {
+		String[] Operazioni = {"Insert", "Delete", "Update", "Read"};
+		
+		int sceltaCiclo = 0;
+		do {
+		System.out.print("Scegli l'operazione da eseguire:\n");
+		for (int i = 0; i < Operazioni.length; i++) {
+			System.out.println((i + 1) + ". " + Operazioni[i]);
+	}
+		System.out.println("0. ESCI");
+		try {
+			sceltaCiclo = scanner.nextInt();
+		} catch (Exception e) {
+			System.out.print("Carattere non valido. Riprovare.");
+	    	   scanner.nextLine();
+	    	   continue;
+		}
+			switch (sceltaCiclo) {
+			case 1:
+				insertManager(scanner);
+				break;
+			case 2:
+				readAllManager();
+				deleteManager(scanner);
+				break;
+			case 3:
+				readAllManager();
+				updateManager(scanner);
+				break;
+			case 4:
+				readAllManager();
+				break;
+			case 0: 			
+				System.out.print("Arrivederci.");
+				break;
+			default:
+				System.out.print("Operazione non esistente.");
+			}
+		} while (sceltaCiclo != 0);
+	}
 
 	// metodo per stampare la lista dei manager
 	public static void readAllManager() {
