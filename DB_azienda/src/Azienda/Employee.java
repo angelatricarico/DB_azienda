@@ -7,10 +7,7 @@ import java.util.List;
 
 public class Employee {
 
-	// dati per login
-	private static final String URL = "jdbc:mysql://localhost:3306/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Trust1981.";
+	private static Connection conn = Connessione.getConnection("azienda");
 
 	private static int id;
 	private static String nome;
@@ -122,7 +119,7 @@ public class Employee {
 
 		System.out.println("Lista dipendenti:");
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery(sql)) {
 
@@ -152,7 +149,7 @@ public class Employee {
 	 */
 	public static int insertDipendenti(Scanner scanner) {
 		String sql = "INSERT INTO dipendenti(nome_dipendente, cognome_dipendente, stipendio_base) VALUES(?, ?, ?)";
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			System.out.println("Inserire il nome del dipendente:");
@@ -196,7 +193,7 @@ public class Employee {
 	public static void deleteDipendenti(Scanner scanner) {
 		String sql = "DELETE FROM dipendenti WHERE id_dipendente=?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			System.out.println("Inserire l'ID del dipendente da cancellare:");
@@ -245,7 +242,7 @@ public class Employee {
 			}
 				String sql = "UPDATE dipendenti SET " + input + "= ? WHERE id_dipendente= ?";
 
-				try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+				try (
 						PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 					System.out.println("Inserisci l'ID del dipendente che vuoi aggiornare: ");

@@ -5,10 +5,7 @@ import java.util.Scanner;
 
 public class Linguaggi {
 
-	// dati per login
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Trust1981.";
+	private static Connection conn = Connessione.getConnection("azienda");
 
 	// campi tabella
 	private static int idLinguaggio;
@@ -63,7 +60,7 @@ public class Linguaggi {
 
 		System.out.println("Lista linguaggi:");
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery(sql)) {
 
@@ -90,7 +87,7 @@ public class Linguaggi {
 	 */
 	public static int insertLinguaggi(Scanner scanner) {
 		String sql = "INSERT INTO linguaggi VALUES(?)";
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			System.out.println("Inserisci il nome del linguaggio: ");
@@ -122,7 +119,7 @@ public class Linguaggi {
 	public static void deleteLinguaggi(Scanner scanner) {
 		String sql = "DELETE FROM linguaggi WHERE id_linguaggio=?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			System.out.println("Inserisci l'ID del linguaggio che vuoi eliminare: ");
@@ -149,7 +146,7 @@ public class Linguaggi {
 
 		String sql = "UPDATE linguaggi SET nome_linguaggio= ? WHERE id_dipendente= ?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			System.out.println("Inserisci l'ID del dipendente che vuoi aggiornare: ");

@@ -6,7 +6,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-				
+
+		menuGenerale(scanner);
+		
+		scanner.close();
+		
+		System.exit(0);
+		}
+	
+	public static void menuGenerale (Scanner scanner) {
 		String[] Tabelle = { "Employee", "Developer", "Manager", "Linguaggi", "Linguaggi conosciuti", "Team", "Progetti assegnati"};
 		
 		int inizioCiclo = 1;
@@ -53,9 +61,8 @@ public class Main {
 				System.out.print("Operazione non esistente.");
 			}
 		} while (inizioCiclo != 0);
-		scanner.close();
-		}
 
 
 	}
+}
 

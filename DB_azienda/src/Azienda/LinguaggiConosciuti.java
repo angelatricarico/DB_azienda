@@ -8,11 +8,7 @@ import java.sql.*;
 
 public class LinguaggiConosciuti {
 	
-
-	// dati per login
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Trust1981";
+	private static Connection conn = Connessione.getConnection("azienda");
 	
 	private static int id_linguaggiConosciuti;
 	private static int id_linguaggi;
@@ -71,7 +67,7 @@ public class LinguaggiConosciuti {
 
 			System.out.println("Lista DEVELOPER+LINGUAGGI CONOSCIUTI:");
 
-			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			try (
 					Statement s = conn.createStatement();
 					ResultSet rs = s.executeQuery(sql)) {
 
@@ -98,7 +94,7 @@ public class LinguaggiConosciuti {
 		 */
 		public static int insertLinguaggiConosciuti(Scanner scanner) {
 			String sql = "INSERT INTO linguaggi_conosciuti VALUES(?, ?)";
-			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			try (
 					PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 				System.out.println("Inserire l'ID del linguaggio: ");
@@ -135,7 +131,7 @@ public class LinguaggiConosciuti {
 		public static void deleteLinguaggiConosciuti(Scanner scanner) {
 			String sql = "DELETE FROM linguaggi_conosciuti WHERE id_linguaggiConosciuti=?";
 
-			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			try (
 					PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
 				System.out.println("Inserire l'ID del dipendente da cancellare: ");
@@ -180,7 +176,7 @@ public class LinguaggiConosciuti {
 				} 
 					String sql = "UPDATE linguaggi_conosciuti SET " + input + "= ? WHERE id_linguaggiConosciuti= ?";
 
-					try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+					try (
 							PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 						System.out.println("Inserisci l'ID del developer che vuoi aggiornare: ");

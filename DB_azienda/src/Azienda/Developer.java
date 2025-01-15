@@ -4,9 +4,8 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Developer extends Employee {
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Trust1981.";
+	
+	private static Connection conn = Connessione.getConnection("azienda");
 
 	private int idDeveloper;
 	private int idDipendente;
@@ -81,11 +80,9 @@ public class Developer extends Employee {
 		} while (sceltaCiclo != 0);
 	}
 
-
 	public static int insertDeveloper(Scanner scanner) {
 		String sql = "INSERT INTO developer (id_dipendente) VALUES (?);";
 		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
 			System.out.println("Inserire l'ID del developer: ");
@@ -113,7 +110,6 @@ public class Developer extends Employee {
 	public static void readAllDeveloper() {
 		String sql = "SELECT * FROM dipendenti RIGHT JOIN developer ON developer.id_dipendente = dipendenti.id_dipendente;";
 		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -136,7 +132,7 @@ public class Developer extends Employee {
 	public static void updateDeveloper(Scanner scanner) {
 		String sql = "UPDATE developer SET id_dipendente = ? WHERE id_developer = ?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			System.out.println("Inserisci l'ID del developer che vuoi aggiornare: ");
@@ -163,7 +159,7 @@ public class Developer extends Employee {
 	
 	public static void deleteDeveloper(Scanner scanner) {
         String sql = "DELETE FROM developer WHERE id_developer = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
         	
         	System.out.print("Inserire l'id del developer da eliminare: ");

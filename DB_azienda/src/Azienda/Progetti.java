@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Progetti {
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Trust1981";
 
+	private static Connection conn = Connessione.getConnection("azienda");
+	
 	private int idProgetto;
 	private String nome;
 
@@ -84,7 +83,7 @@ public class Progetti {
 	public static int insertProgetto(Scanner scanner) {
 		String sql = "INSERT INTO progetti (nome_progetto, id_team) VALUES (?,?);";
 		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
 			System.out.println("Inserire il nome del progetto da inserire");
@@ -116,7 +115,7 @@ public class Progetti {
 	
 	public static void deleteProgetto(Scanner scanner) {
         String sql = "DELETE FROM progetti WHERE id_progetto = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
         	
         	System.out.print("Inserire l'id del progetto da eliminare: ");
@@ -138,7 +137,6 @@ public class Progetti {
 	public static void readAllProgetto() {
 		String sql = "SELECT * FROM progetti;";
 		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -179,7 +177,7 @@ public class Progetti {
 			             
 		    String sql = "UPDATE progetti SET " + input + "= ? WHERE id_progetto = ?";
 		 
-		    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		    try (
 		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 		        	
 		        System.out.println("Inserisci l'ID del progetto che vuoi aggiornare: ");

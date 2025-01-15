@@ -8,9 +8,7 @@ import java.util.Scanner;
 
 public class ProgettiDeveloper {
 	
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Trust1981";
+	private static Connection conn = Connessione.getConnection("azienda");
 
 	private static int id_progetti_developer;
 	private static int id_progetti;
@@ -26,7 +24,7 @@ public class ProgettiDeveloper {
 
 		System.out.println("Lista DEVELOPER+LINGUAGGI CONOSCIUTI:");
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery(sql)) {
 
@@ -54,7 +52,7 @@ public class ProgettiDeveloper {
 	 */
 	public static int insertProgettiDeveloper(Scanner scanner) {
 		String sql = "INSERT INTO linguaggi_conosciuti VALUES(?, ?)";
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
 			System.out.println("Inserire l'ID del progetto: ");
@@ -90,7 +88,7 @@ public class ProgettiDeveloper {
 	public static void deleteProgettiDeveloper(Scanner scanner) {
 		String sql = "DELETE FROM progetti_developer WHERE id_progetti_developer=?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			System.out.println("Inserire l'ID del progetto assegnato da cancellare:");
@@ -135,7 +133,7 @@ public class ProgettiDeveloper {
 			}
 			String sql = "UPDATE progetti_developer SET " + input + "= ? WHERE id_progetti_developer= ?";
 
-			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			try (
 					PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 				System.out.println("Inserisci l'ID del progetto assegnato che vuoi aggiornare: ");

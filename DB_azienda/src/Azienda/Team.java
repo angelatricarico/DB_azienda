@@ -4,9 +4,8 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Team {
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "Lore!SQL0111";
+
+	private static Connection conn = Connessione.getConnection("azienda");
 
 	private int idTeam;
 	private String nome;
@@ -84,7 +83,7 @@ public class Team {
 	public static int insertTeam(Scanner scanner) {
 		String sql = "INSERT INTO team (nome_team) VALUES (?);";
 		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
 			System.out.println("Inserire il nome del team da inserire");
@@ -111,7 +110,7 @@ public class Team {
 	
 	public static void deleteTeam(Scanner scanner) {
         String sql = "DELETE FROM team WHERE id_team = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
         	
         	System.out.print("Inserire l'id del team da eliminare: ");
@@ -133,7 +132,6 @@ public class Team {
 	public static void readAllTeam() {
 		String sql = "SELECT * FROM team;";
 		try {
-			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -153,7 +151,7 @@ public class Team {
 	public static void updateTeam(Scanner scanner) {
 		String sql = "UPDATE team SET nome_team = ? WHERE id_team = ?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			System.out.println("Inserisci l'ID del team che vuoi aggiornare: ");

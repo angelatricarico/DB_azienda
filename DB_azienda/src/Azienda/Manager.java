@@ -7,10 +7,7 @@ import java.util.Scanner;
 
 public class Manager extends Employee {
 
-	// dati per login
-	private static final String URL = "jdbc:mysql://localhost/azienda";
-	private static final String USER = "root";
-	private static final String PASSWORD = "sl._N2aScXw3i";
+	private static Connection conn = Connessione.getConnection("azienda");
 
 	private static int idManager;
 	private static double bonus;
@@ -94,7 +91,7 @@ public class Manager extends Employee {
 
 		System.out.println("Lista manager:");
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery(sql)) {
 
@@ -123,7 +120,7 @@ public class Manager extends Employee {
 	 */
 	public static int insertManager(Scanner scanner) {
 		String sql = "INSERT INTO manager VALUES(?, ?, ?)";
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			
 			System.out.println("Inserire l'ammontare del bonus del manager: ");
@@ -161,7 +158,7 @@ public class Manager extends Employee {
 	public static void deleteManager(Scanner scanner) {
 		String sql = "DELETE FROM manager WHERE id_manager=?";
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
 			System.out.println("Inserire l'ID del manager da cancellare: ");
@@ -208,7 +205,7 @@ public class Manager extends Employee {
 			}
 				String sql = "UPDATE manager SET " + input + "= ? WHERE id_dipendente= ?";
 
-				try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+				try (
 						PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 					System.out.println("Inserisci l'ID del manager che vuoi aggiornare: ");
@@ -245,7 +242,7 @@ public class Manager extends Employee {
 
 		System.out.println("Lista manager:");
 
-		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		try (
 				Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery(sql)) {
 
