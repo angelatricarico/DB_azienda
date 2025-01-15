@@ -126,10 +126,10 @@ public class Manager extends Employee {
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			
-			System.out.println("Inserire l'ammontare del bonus del manager:");
+			System.out.println("Inserire l'ammontare del bonus del manager: ");
 			bonus=scanner.nextDouble();
 			pstmt.setDouble(1, bonus);
-			System.out.println("Inserire l'ID del team gestito dal mananger:");
+			System.out.println("Inserire l'ID del team gestito dal mananger: ");
 			teamGestito=scanner.nextInt();
 			pstmt.setInt(2, teamGestito);
 			System.out.println("Inserire l'ID dipendente per recuperare le informazioni base del manager:");
@@ -164,7 +164,7 @@ public class Manager extends Employee {
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			
-			System.out.println("Inserire l'ID del manager da cancellare:");
+			System.out.println("Inserire l'ID del manager da cancellare: ");
 			idManager=scanner.nextInt();
 			pstmt.setInt(1, idManager);
 			int affectedRows = pstmt.executeUpdate();
@@ -178,7 +178,6 @@ public class Manager extends Employee {
 			e.printStackTrace();
 		}
 	}
-	
 	
 
 	/*
@@ -198,7 +197,7 @@ public class Manager extends Employee {
 		// if-else per controllare se la stringa contenuta è nell'ArrayList
 		if (colonneValide.contains(input)) {
 
-			System.out.println("Inserisci il nuovo valore del dipendente da aggiornare: ");
+			System.out.println("Inserisci il nuovo valore del manager da aggiornare: ");
 			// dichiariamo un oggetto per memorizzare temporaneamente il valore immesso dall'utente
 			Object nuovoValore = null;
 
@@ -207,12 +206,12 @@ public class Manager extends Employee {
 			} else if (input.equals("bonus")) {
 				nuovoValore = scanner.nextDouble();
 			}
-				String sql = "UPDATE dipendenti SET " + input + "= ? WHERE id_dipendente= ?";
+				String sql = "UPDATE manager SET " + input + "= ? WHERE id_dipendente= ?";
 
 				try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 						PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-					System.out.println("Inserisci l'ID del dipendente che vuoi aggiornare: ");
+					System.out.println("Inserisci l'ID del manager che vuoi aggiornare: ");
 					int ID = scanner.nextInt();
 					scanner.nextLine();
 					

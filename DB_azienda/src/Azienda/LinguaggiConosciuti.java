@@ -101,11 +101,11 @@ public class LinguaggiConosciuti {
 			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 					PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-				System.out.println("Inserire l'ID del linguaggio:");
+				System.out.println("Inserire l'ID del linguaggio: ");
 				id_linguaggi=scanner.nextInt();
 				pstmt.setInt(1, id_linguaggi);
 				
-				System.out.println("Inserire l'ID del developer:");
+				System.out.println("Inserire l'ID del developer: ");
 				id_developer=scanner.nextInt();
 				pstmt.setInt(2, id_developer);
 				
@@ -138,7 +138,7 @@ public class LinguaggiConosciuti {
 			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 					PreparedStatement pstmt = conn.prepareStatement(sql)) {
 				
-				System.out.println("Inserire l'ID del dipendente da cancellare:");
+				System.out.println("Inserire l'ID del dipendente da cancellare: ");
 				id_linguaggiConosciuti=scanner.nextInt();
 				pstmt.setInt(1, id_linguaggiConosciuti);
 				int affectedRows = pstmt.executeUpdate();
@@ -171,7 +171,7 @@ public class LinguaggiConosciuti {
 			// if-else per controllare se la stringa contenuta è nell'ArrayList
 			if (colonneValide.contains(input)) {
 
-				System.out.println("Inserisci il nuovo valore del dipendente da aggiornare: ");
+				System.out.println("Inserisci il nuovo valore del linguaggio conosciuto da aggiornare: ");
 				// dichiariamo un oggetto per memorizzare temporaneamente il valore immesso dall'utente
 				Object nuovoValore = null;
 
@@ -183,7 +183,7 @@ public class LinguaggiConosciuti {
 					try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 							PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-						System.out.println("Inserisci l'ID del dipendente che vuoi aggiornare: ");
+						System.out.println("Inserisci l'ID del developer che vuoi aggiornare: ");
 						int ID = scanner.nextInt();
 						scanner.nextLine();
 						
@@ -195,9 +195,9 @@ public class LinguaggiConosciuti {
 						
 						int affectedRows = pstmt.executeUpdate();
 						if (affectedRows > 0) {
-							System.out.println("Dipendente con ID " + ID + " aggiornato correttamente.");
+							System.out.println("Linguaggio conosciuto con ID " + ID + " aggiornato correttamente.");
 						} else {
-							System.out.println("Nessun dipendente aggiornato. Verificare l'ID.");
+							System.out.println("Nessun linguaggio conosciuto aggiornato. Verificare l'ID.");
 						}
 
 					} catch (SQLException e) {

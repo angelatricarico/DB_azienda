@@ -57,11 +57,11 @@ public class ProgettiDeveloper {
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-			System.out.println("Inserire l'ID del progetto:");
+			System.out.println("Inserire l'ID del progetto: ");
 			id_progetti = scanner.nextInt();
 			pstmt.setInt(1, id_progetti);
 
-			System.out.println("Inserire l'ID del developer:");
+			System.out.println("Inserire l'ID del developer: ");
 			id_developer = scanner.nextInt();
 			pstmt.setInt(2, id_developer);
 
@@ -93,15 +93,15 @@ public class ProgettiDeveloper {
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			System.out.println("Inserire l'ID del dipendente da cancellare:");
+			System.out.println("Inserire l'ID del progetto assegnato da cancellare:");
 			id_progetti_developer = scanner.nextInt();
 			pstmt.setInt(1, id_progetti_developer);
 			int affectedRows = pstmt.executeUpdate();
 
 			if (affectedRows > 0) {
-				System.out.println("Record con ID " + id_progetti_developer + " cancellato correttamente.");
+				System.out.println("Progetto assegnato con ID " + id_progetti_developer + " cancellato correttamente.");
 			} else {
-				throw new SQLException("Nessun record eliminato. Ricontrollare ID.");
+				throw new SQLException("Nessun progetto assegnato eliminato. Ricontrollare ID.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,7 +125,7 @@ public class ProgettiDeveloper {
 		// if-else per controllare se la stringa contenuta è nell'ArrayList
 		if (colonneValide.contains(input)) {
 
-			System.out.println("Inserisci il nuovo valore del campo progetti_developer da aggiornare: ");
+			System.out.println("Inserisci il nuovo valore da aggiornare: ");
 			// dichiariamo un oggetto per memorizzare temporaneamente il valore immesso
 			// dall'utente
 			Object nuovoValore = null;
@@ -138,7 +138,7 @@ public class ProgettiDeveloper {
 			try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 					PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-				System.out.println("Inserisci l'ID del record che vuoi aggiornare: ");
+				System.out.println("Inserisci l'ID del progetto assegnato che vuoi aggiornare: ");
 				int ID = scanner.nextInt();
 				scanner.nextLine();
 
@@ -150,9 +150,9 @@ public class ProgettiDeveloper {
 
 				int affectedRows = pstmt.executeUpdate();
 				if (affectedRows > 0) {
-					System.out.println("Record con ID " + ID + " aggiornato correttamente.");
+					System.out.println("Progetto assegnato con ID " + ID + " aggiornato correttamente.");
 				} else {
-					System.out.println("Nessun record aggiornato. Verificare l'ID.");
+					System.out.println("Nessun progetto assegnato aggiornato. Verificare l'ID.");
 				}
 
 			} catch (SQLException e) {

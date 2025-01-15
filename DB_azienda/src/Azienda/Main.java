@@ -52,7 +52,7 @@ public class Main {
 			default:
 				System.out.print("Operazione non esistente.");
 			}
-		} while (inizioCiclo != 1);
+		} while (inizioCiclo != 0);
 		scanner.close();
 		}
 

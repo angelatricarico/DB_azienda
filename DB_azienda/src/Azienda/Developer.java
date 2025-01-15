@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Developer extends Employee {
 	private static final String URL = "jdbc:mysql://localhost/azienda";
 	private static final String USER = "root";
-	private static final String PASSWORD = "Lore!SQL0111";
+	private static final String PASSWORD = "Trust1981.";
 
 	private int idDeveloper;
 	private int idDipendente;
@@ -88,7 +88,7 @@ public class Developer extends Employee {
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
-			System.out.println("Inserire l'ID del dipendente al developer da inserire");
+			System.out.println("Inserire l'ID del developer: ");
 			int id_dipendente = scanner.nextInt();
 			
 			pstmt.setInt(1, id_dipendente);

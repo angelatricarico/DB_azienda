@@ -8,7 +8,7 @@ public class Linguaggi {
 	// dati per login
 	private static final String URL = "jdbc:mysql://localhost/azienda";
 	private static final String USER = "root";
-	private static final String PASSWORD = "sl._N2aScXw3i";
+	private static final String PASSWORD = "Trust1981.";
 
 	// campi tabella
 	private static int idLinguaggio;
@@ -48,10 +48,10 @@ public class Linguaggi {
 				readAllLinguaggi();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
-				System.out.print("Operazione non esistente.");
+				System.out.println("Operazione non esistente.");
 			}
 		} while (sceltaCiclo != 0);
 	}
@@ -80,8 +80,6 @@ public class Linguaggi {
 
 	}
 	
-
-
 
 	/*
 	 * metodo per aggiungere nuovi linguaggio
@@ -133,9 +131,9 @@ public class Linguaggi {
 			int affectedRows = pstmt.executeUpdate();
 
 			if (affectedRows > 0) {
-				System.out.println("Dipendente con ID " + idLinguaggio + " cancellato correttamente.");
+				System.out.println("Linguaggio con ID " + idLinguaggio + " cancellato correttamente.");
 			} else {
-				throw new SQLException("Nessun dipendente eliminato. Ricontrollare ID.");
+				throw new SQLException("Nessun linguaggio eliminato. Ricontrollare ID.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,7 +147,7 @@ public class Linguaggi {
 	 */
 	public static void updateLinguaggi(Scanner scanner) {
 
-		String sql = "UPDATE dipendenti SET nome_linguaggio= ? WHERE id_dipendente= ?";
+		String sql = "UPDATE linguaggi SET nome_linguaggio= ? WHERE id_dipendente= ?";
 
 		try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -168,9 +166,9 @@ public class Linguaggi {
 			
 			int affectedRows = pstmt.executeUpdate();
 			if (affectedRows > 0) {
-				System.out.println("Dipendente con ID " + idLinguaggio + " aggiornato correttamente.");
+				System.out.println("Linguaggio con ID " + idLinguaggio + " aggiornato correttamente.");
 			} else {
-				System.out.println("Nessun dipendente aggiornato. Verificare l'ID.");
+				System.out.println("Nessun linguaggio aggiornato. Verificare l'ID.");
 			}
 
 		} catch (SQLException e) {

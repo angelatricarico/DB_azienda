@@ -161,7 +161,7 @@ public class Progetti {
 		List<String> colonneValide = Arrays.asList("nome_progetto", "id_team");
 
 
-        System.out.println("Vuoi aggiornare 1) nome_progetto 2) id_team");
+        System.out.println("Vuoi aggiornare 1) nome_progetto 2) id_team? ");
         String input = scanner.nextLine();
            	
         if (colonneValide.contains(input)) {
