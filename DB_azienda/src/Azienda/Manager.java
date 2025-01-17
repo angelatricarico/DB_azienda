@@ -52,7 +52,7 @@ public class Manager  {
 				readAllManager();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
 				System.out.print("Operazione non esistente.");
@@ -111,9 +111,11 @@ public class Manager  {
 			System.out.println("Inserire l'ammontare del bonus del manager: ");
 			bonus=scanner.nextDouble();
 			pstmt.setDouble(1, bonus);
+			Team.readAllTeam();
 			System.out.println("Inserire l'ID del team gestito dal mananger: ");
 			teamGestito=scanner.nextInt();
 			pstmt.setInt(2, teamGestito);
+			Employee.readAllDipendenti();
 			System.out.println("Inserire l'ID dipendente per recuperare le informazioni base del manager:");
 			idDipendente=scanner.nextInt();
 			pstmt.setInt(3, idDipendente);
@@ -171,10 +173,13 @@ public class Manager  {
 
 		// arrayList con i nomi dei campi della tabella dipendente
 		List<String> colonneValide = Arrays.asList("bonus", "teamGestito", "id_dipendente");
+		
+		scanner.nextLine();
 
 		// raccogliamo l'input del campo da modificare
 		System.out.println("Quale campo vuoi aggiornare? 1) bonus 2) teamGestito 3) id_dipendente");
 		String input = scanner.nextLine();
+		
 
 		// if-else per controllare se la stringa contenuta è nell'ArrayList
 		if (colonneValide.contains(input)) {
@@ -188,7 +193,7 @@ public class Manager  {
 			} else if (input.equals("bonus")) {
 				nuovoValore = scanner.nextDouble();
 			}
-				String sql = "UPDATE manager SET " + input + "= ? WHERE id_dipendente= ?";
+				String sql = "UPDATE manager SET " + input + "= ? WHERE id_manager= ?";
 
 				try (
 						PreparedStatement pstmt = conn.prepareStatement(sql)) {

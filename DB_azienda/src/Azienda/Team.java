@@ -45,7 +45,7 @@ public class Team {
 				readAllTeam();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
 				System.out.print("Operazione non esistente.");
@@ -159,7 +159,6 @@ public class Team {
 			
 			System.out.println("Inserisci il nuovo nome del team: ");
 			String nuovo_nome = scanner.nextLine();
-			scanner.nextLine();
 			pstmt.setString(1, nuovo_nome);
 			
 			int affectedRows = pstmt.executeUpdate();

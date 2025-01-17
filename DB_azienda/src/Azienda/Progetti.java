@@ -31,10 +31,10 @@ public class Progetti {
 			switch (sceltaCiclo) {
 			case 1:
 				scanner.nextLine();
-				scanner.nextLine();
 				int insert = insertProgetto(scanner);
 				if (insert>0) 
 					System.out.println("Inserito progetto con ID: "+insert);
+				break;
 			case 2:
 				readAllProgetto();
 				deleteProgetto(scanner);
@@ -47,7 +47,7 @@ public class Progetti {
 				readAllProgetto();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
 				System.out.print("Operazione non esistente.");
@@ -68,9 +68,10 @@ public class Progetti {
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
-			System.out.println("Inserire il nome del progetto da inserire");
+			System.out.println("Inserire il nome del progetto da creare: ");
 			String nome = scanner.nextLine();
 			
+			Team.readAllTeam();
 			System.out.println("Inserire l'id del team del progetto");
 			int id_team = scanner.nextInt();
 			
@@ -178,7 +179,8 @@ public class Progetti {
 		 
 		    try (
 		         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-		        	
+		        
+		    	Progetti.readAllProgetto();
 		        System.out.println("Inserisci l'ID del progetto che vuoi aggiornare: ");
 		        int ID = scanner.nextInt();
 		        scanner.nextLine();

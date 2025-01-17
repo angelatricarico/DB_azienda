@@ -32,7 +32,6 @@ public class Linguaggi {
 			switch (sceltaCiclo) {
 			case 1:
 				scanner.nextLine();
-				scanner.nextLine();
 				int insert = insertLinguaggi(scanner);
 				if (insert>0) 
 					System.out.println("Inserito linguaggio con ID: "+insert);
@@ -96,7 +95,7 @@ public class Linguaggi {
 	 * @return int contenente l'id del nuovo record; -1 in caso di errore
 	 */
 	public static int insertLinguaggi(Scanner scanner) {
-		String sql = "INSERT INTO linguaggi VALUES(?)";
+		String sql = "INSERT INTO linguaggi (nome_linguaggio) VALUES(?)";
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -159,7 +158,7 @@ public class Linguaggi {
 		try (
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-			System.out.println("Inserisci l'ID del dipendente che vuoi aggiornare: ");
+			System.out.println("Inserisci l'ID del linguaggio che vuoi aggiornare: ");
 			idLinguaggio = scanner.nextInt();
 			pstmt.setInt(2, idLinguaggio);
 			
@@ -167,7 +166,6 @@ public class Linguaggi {
 			
 			System.out.println("Inserisci il nuovo valore: ");
 			nomeLinguaggio = scanner.nextLine();
-			scanner.nextLine();
 			pstmt.setString(1, nomeLinguaggio);
 
 			

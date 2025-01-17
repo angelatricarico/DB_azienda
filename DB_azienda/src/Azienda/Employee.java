@@ -54,7 +54,7 @@ public class Employee {
 				readAllDipendenti();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
 				System.out.print("Operazione non esistente.");
@@ -118,8 +118,12 @@ public class Employee {
 			pstmt.setString(2, cognome);
 			
 			System.out.println("Inserire lo stipendio (base):");
-			stipendioBase=scanner.nextInt();
+			stipendioBase=scanner.nextDouble();
 			pstmt.setDouble(3, stipendioBase);
+			
+			System.out.println("Inserire l'ID team del dipendente:");
+			id_team=scanner.nextInt();
+			pstmt.setInt(4, id_team);
 		
 
 			int affectedRows = pstmt.executeUpdate();

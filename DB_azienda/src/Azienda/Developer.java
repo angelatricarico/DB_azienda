@@ -29,8 +29,7 @@ public class Developer  {
 			switch (sceltaCiclo) {
 			case 1:
 				scanner.nextLine();
-				scanner.nextLine();
-				scanner.nextLine();
+				Employee.readAllDipendenti();
 				int insert = insertDeveloper(scanner);
 				if (insert>0) 
 					System.out.println("Inserito Developer con ID: "+insert);	
@@ -48,7 +47,7 @@ public class Developer  {
 				readAllDeveloper();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
 				System.out.print("Operazione non esistente.");

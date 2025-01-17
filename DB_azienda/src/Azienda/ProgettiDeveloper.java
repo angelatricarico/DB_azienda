@@ -22,23 +22,25 @@ public class ProgettiDeveloper {
 	 * @return int contenente l'id del nuovo record; -1 in caso di errore
 	 */	
 	public static void readAllProgettiDeveloper() {
-		String sql = "SELECT dipendenti.nome_dipendente, dipendenti.cognome_dipendente, progetto.nome_progetto\r\n"
-				+ "FROM dipendentiINNER JOIN developer ON dipendenti.id_dipendente = developer.id_dipendente\r\n"
+		String sql = "SELECT progetti_developer.id_progetti_developer, dipendenti.nome_dipendente, dipendenti.cognome_dipendente, progetti.nome_progetto\r\n"
+				+ "FROM dipendenti INNER JOIN developer ON dipendenti.id_dipendente = developer.id_dipendente\r\n"
 				+ "INNER JOIN progetti_developer ON developer.id_developer = progetti_developer.id_developer\r\n"
-				+ "INNER JOIN progetto ON progetti_developer.id_developer=progetto.id_progetto";
+				+ "INNER JOIN progetti ON progetti_developer.id_progetti=progetti.id_progetto;";
 
-		System.out.println("Lista DEVELOPER+LINGUAGGI CONOSCIUTI:");
+		System.out.println("Lista PROGETTI + DEVELOPER:");
 
 		try (
 				Statement s = conn.createStatement();
 				ResultSet rs = s.executeQuery(sql)) {
 
 			while (rs.next()) {
+				int id_progetti_developer = rs.getInt("id_progetti_developer");
 				String nome = rs.getString("nome_dipendente");
 				String cognome = rs.getString("cognome_dipendente");
-				String nome_progetto = rs.getString("nome_progetti");
+				String nome_progetto = rs.getString("nome_progetto");
+				
 
-				System.out.printf("Nome: %s | Cognome: %s | Linguaggio: %s\n", nome, cognome, nome_progetto);
+				System.out.printf("ID progetto developer: %d | Nome: %s | Cognome: %s | Linguaggio: %s\n", id_progetti_developer, nome, cognome, nome_progetto);
 			}
 
 		} catch (SQLException e) {
@@ -65,6 +67,7 @@ public class ProgettiDeveloper {
 			id_progetti = scanner.nextInt();
 			pstmt.setInt(1, id_progetti);
 
+			Developer.readAllDeveloper();
 			System.out.println("Inserire l'ID del developer: ");
 			id_developer = scanner.nextInt();
 			pstmt.setInt(2, id_developer);
@@ -119,7 +122,8 @@ public class ProgettiDeveloper {
 	 * @param scanner -> scanner per gestire i vari input presenti nel metodo
 	 */
 	public static void updateProgettiDeveloper(Scanner scanner) {
-
+		scanner.nextLine();
+		
 		// arrayList con i nomi dei campi della tabella dipendente
 		List<String> colonneValide = Arrays.asList("id_progetti", "id_developer");
 
@@ -129,6 +133,8 @@ public class ProgettiDeveloper {
 
 		// if-else per controllare se la stringa contenuta è nell'ArrayList
 		if (colonneValide.contains(input)) {
+			
+			Progetti.readAllProgetto();
 
 			System.out.println("Inserisci il nuovo valore da aggiornare: ");
 			// dichiariamo un oggetto per memorizzare temporaneamente il valore immesso
@@ -190,7 +196,7 @@ public class ProgettiDeveloper {
 			switch (sceltaCiclo) {
 			case 1:
 				scanner.nextLine();
-				scanner.nextLine();
+				Progetti.readAllProgetto();
 				int insert = insertProgettiDeveloper(scanner);
 				if (insert>0) 
 					System.out.println("Inserito record \"progetti_developer\" con ID: "+insert);			
@@ -207,7 +213,7 @@ public class ProgettiDeveloper {
 				readAllProgettiDeveloper();
 				break;
 			case 0: 			
-				System.out.print("Arrivederci.");
+				System.out.println("Arrivederci.");
 				break;
 			default:
 				System.out.print("Operazione non esistente.");
